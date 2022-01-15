@@ -2,20 +2,17 @@
 
 using namespace std;
 
-class Node
-{
+class Node {
 public:
-    Node(const int v) :
-        next(nullptr),
-        value(v)
-    {}
+    Node(const int v)
+        : next(nullptr),
+          value(v) {}
 
     Node* next;
     int value;
 };
 
-class List
-{
+class List {
 public:
     List();
     void add(Node* node);
@@ -25,70 +22,54 @@ private:
     Node* first;
 };
 
-List::List() :
-    first(nullptr)
-{}
+List::List()
+    : first(nullptr) {}
 
-void List::add(Node* node)
-{
-    if(!first)
-    {
+void List::add(Node* node) {
+    if (!first) {
         first = node;
-    }
-    else
-    {
+    } else {
         Node* current = first;
-        while(current->next)
-        {
+        while (current->next) {
             current = current->next;
         }
         current->next = node;
     }
 }
 
-Node* List::get(const int value)
-{
-    if(!first)
-    {
+Node* List::get(const int value) {
+    if (!first) {
         cout << "List is empty!" << endl;
         return nullptr;
-    }
-    else
-    {
+    } else {
         Node* current = first;
-        do
-        {
-            if(current->value == value)
-            {
+        do {
+            if (current->value == value) {
                 cout << "Found value " << current->value << endl;
                 return current;
-            }
-            else
-            {
+            } else {
                 cout << "Going through " << current->value << endl;
                 current = current->next;
             }
-        } while(current);
+        } while (current);
         cout << "Not found: value " << value << endl;
         return nullptr;
     }
 }
 
-int main()
-{
-    List lista;
+int main() {
+    List list;
     Node* node4 = new Node(4);
     Node* node7 = new Node(7);
 
-    lista.add(node4);
-    lista.add(new Node(2));
-    lista.add(node7);
-    lista.add(new Node(9));
-    auto node = lista.get(1);
+    list.add(node4);
+    list.add(new Node(2));
+    list.add(node7);
+    list.add(new Node(9));
+    auto node = list.get(1);
 
     if (node)
         cout << node->value << '\n';
 
     return 0;
 }
-
