@@ -4,8 +4,8 @@
 #include <string>
 
 struct EmptyListError : public std::runtime_error {
-    EmptyListError(const std::string& message = "")
-        : std::runtime_error(message) {}
+    EmptyListError()
+        : std::runtime_error("ERROR: List is empty!") {}
 };
 
 class Node {
@@ -45,8 +45,7 @@ void List::add(const int value) {
 
 std::shared_ptr<Node> List::get(const int value) {
     if (!first) {
-        std::cout << "List is empty!" << std::endl;
-        return nullptr;
+        throw EmptyListError();
     } else {
         std::shared_ptr<Node> current = first;
         do {
@@ -58,7 +57,7 @@ std::shared_ptr<Node> List::get(const int value) {
                 current = current->next;
             }
         } while (current);
-        throw EmptyListError("List element not found");
+        std::cout << "Not found: value " << value << std::endl;
         return nullptr;
     }
 }
@@ -66,17 +65,25 @@ std::shared_ptr<Node> List::get(const int value) {
 int main() {
     List list;
 
-    list.add(4);
-    list.add(2);
-    list.add(7);
-    list.add(9);
-    list.add(4);
     try {
         auto node = list.get(1);
         if (node)
             std::cout << node->value << '\n';
     } catch (const EmptyListError& exception) {
-        std::cout << "ERROR: " << exception.what() << std::endl;
-        return 0;
+        std::cerr << exception.what() << std::endl;
+    }
+
+    list.add(4);
+    list.add(2);
+    list.add(7);
+    list.add(9);
+    list.add(4);
+
+    try {
+        auto node = list.get(1);
+        if (node)
+            std::cout << node->value << '\n';
+    } catch (const EmptyListError& exception) {
+        std::cerr << exception.what() << std::endl;
     }
 }
