@@ -7,6 +7,9 @@ public:
     Node(const int v)
         : next(nullptr),
           value(v) {}
+    ~Node() {
+        delete next;
+    };
 
     Node* next;
     int value;
@@ -26,6 +29,10 @@ private:
 List::List()
     : first(nullptr) {}
 
+List::~List() {
+    delete first;
+}
+
 void List::add(Node* node) {
     if (!first) {
         first = node;
@@ -35,16 +42,6 @@ void List::add(Node* node) {
             current = current->next;
         }
         current->next = node;
-    }
-}
-
-List::~List() {
-    Node* current {first};
-    Node* next {nullptr};
-    while (current) {
-        next = current->next;
-        delete current;
-        current = next;
     }
 }
 
