@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <string>
 
-struct EmptyListError : public std::runtime_error {
+struct EmptyListError : std::runtime_error {
     EmptyListError()
         : std::runtime_error("ERROR: List is empty!") {}
 };
