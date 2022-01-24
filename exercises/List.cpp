@@ -15,6 +15,7 @@ public:
 class List {
 public:
     List();
+    ~List();
     void add(Node* node);
     Node* get(const int value);
 
@@ -34,6 +35,16 @@ void List::add(Node* node) {
             current = current->next;
         }
         current->next = node;
+    }
+}
+
+List::~List() {
+    Node* current {first};
+    Node* next {nullptr};
+    while (current) {
+        next = current->next;
+        delete current;
+        current = next;
     }
 }
 
