@@ -1,8 +1,12 @@
 #include <iostream>
 #include <memory>
-#include "EmptyListError.hpp"
+#include <stdexcept>
+#include <string>
 
-// using namespace std;
+struct EmptyListError : public std::runtime_error {
+    EmptyListError(const std::string& message = "")
+        : std::runtime_error(message) {}
+};
 
 class Node {
 public:
