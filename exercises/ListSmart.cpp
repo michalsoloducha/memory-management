@@ -17,8 +17,8 @@ public:
 class List {
 public:
     List();
-    void add(std::shared_ptr<Node> node);
-    std::shared_ptr<Node> get(const int value);
+    void add(const int);
+    std::shared_ptr<Node> get(const int);
 
 private:
     std::shared_ptr<Node> first;
@@ -27,15 +27,15 @@ private:
 List::List()
     : first(nullptr) {}
 
-void List::add(std::shared_ptr<Node> node) {
+void List::add(const int value) {
     if (!first) {
-        first = node;
+        first = std::make_shared<Node>(value);
     } else {
         std::shared_ptr<Node> current = first;
         while (current->next) {
             current = current->next;
         }
-        current->next = node;
+        current->next = std::make_shared<Node>(value);
     }
 }
 
@@ -61,13 +61,12 @@ std::shared_ptr<Node> List::get(const int value) {
 
 int main() {
     List list;
-    auto node4 = std::make_shared<Node>(4);
-    auto node7 = std::make_shared<Node>(7);
 
-    list.add(node4);
-    list.add(std::make_shared<Node>(2));
-    list.add(node7);
-    list.add(std::make_shared<Node>(9));
+    list.add(4);
+    list.add(2);
+    list.add(7);
+    list.add(9);
+    list.add(4);
     try {
         auto node = list.get(1);
         if (node)
