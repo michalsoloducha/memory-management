@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include "EmptyListError.hpp"
 
 using namespace std;
 
@@ -53,7 +54,7 @@ std::shared_ptr<Node> List::get(const int value) {
                 current = current->next;
             }
         } while (current);
-        cout << "Not found: value " << value << endl;
+        throw EmptyListError("List element not found");
         return nullptr;
     }
 }
@@ -67,11 +68,12 @@ int main() {
     list.add(std::make_shared<Node>(Node(2)));
     list.add(node7);
     list.add(std::make_shared<Node>(Node(9)));
-    list.add(node4);
-    auto node = list.get(1);
-
-    if (node)
-        cout << node->value << '\n';
-
-    return 0;
+    try {
+        auto node = list.get(1);
+        if (node)
+            cout << node->value << '\n';
+    } catch (const EmptyListError& exception) {
+        std::cout << "ERROR: " << exception.what() << std::endl;
+        return 0;
+    }
 }
