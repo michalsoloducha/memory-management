@@ -61,13 +61,13 @@ std::shared_ptr<Node> List::get(const int value) {
 
 int main() {
     List list;
-    std::shared_ptr<Node> node4 = std::make_shared<Node>(Node(4));
-    std::shared_ptr<Node> node7 = std::make_shared<Node>(Node(7));
+    auto node4 = std::make_shared<Node>(4);
+    auto node7 = std::make_shared<Node>(7);
 
     list.add(node4);
-    list.add(std::make_shared<Node>(Node(2)));
+    list.add(std::make_shared<Node>(2));
     list.add(node7);
-    list.add(std::make_shared<Node>(Node(9)));
+    list.add(std::make_shared<Node>(9));
     try {
         auto node = list.get(1);
         if (node)
