@@ -2,7 +2,7 @@
 #include <memory>
 #include "EmptyListError.hpp"
 
-using namespace std;
+// using namespace std;
 
 class Node {
 public:
@@ -41,16 +41,16 @@ void List::add(const int value) {
 
 std::shared_ptr<Node> List::get(const int value) {
     if (!first) {
-        cout << "List is empty!" << endl;
+        std::cout << "List is empty!" << std::endl;
         return nullptr;
     } else {
         std::shared_ptr<Node> current = first;
         do {
             if (current->value == value) {
-                cout << "Found value " << current->value << endl;
+                std::cout << "Found value " << current->value << std::endl;
                 return current;
             } else {
-                cout << "Going through " << current->value << endl;
+                std::cout << "Going through " << current->value << std::endl;
                 current = current->next;
             }
         } while (current);
@@ -70,7 +70,7 @@ int main() {
     try {
         auto node = list.get(1);
         if (node)
-            cout << node->value << '\n';
+            std::cout << node->value << '\n';
     } catch (const EmptyListError& exception) {
         std::cout << "ERROR: " << exception.what() << std::endl;
         return 0;
