@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
@@ -8,29 +9,28 @@ public:
         : next(nullptr),
           value(v) {}
 
-    Node* next;
+    std::shared_ptr<Node> next;
     int value;
 };
 
 class List {
 public:
     List();
-    ~List();
-    void add(Node* node);
-    Node* get(const int value);
+    void add(std::shared_ptr<Node> node);
+    std::shared_ptr<Node> get(const int value);
 
 private:
-    Node* first;
+    std::shared_ptr<Node> first;
 };
 
 List::List()
     : first(nullptr) {}
 
-void List::add(Node* node) {
+void List::add(std::shared_ptr<Node> node) {
     if (!first) {
         first = node;
     } else {
-        Node* current = first;
+        std::shared_ptr<Node> current = first;
         while (current->next) {
             current = current->next;
         }
@@ -38,22 +38,12 @@ void List::add(Node* node) {
     }
 }
 
-List::~List() {
-    Node* current {first};
-    Node* next {nullptr};
-    while (current) {
-        next = current->next;
-        delete current;
-        current = next;
-    }
-}
-
-Node* List::get(const int value) {
+std::shared_ptr<Node> List::get(const int value) {
     if (!first) {
         cout << "List is empty!" << endl;
         return nullptr;
     } else {
-        Node* current = first;
+        std::shared_ptr<Node> current = first;
         do {
             if (current->value == value) {
                 cout << "Found value " << current->value << endl;
@@ -70,13 +60,14 @@ Node* List::get(const int value) {
 
 int main() {
     List list;
-    Node* node4 = new Node(4);
-    Node* node7 = new Node(7);
+    std::shared_ptr<Node> node4 = std::make_shared<Node>(Node(4));
+    std::shared_ptr<Node> node7 = std::make_shared<Node>(Node(7));
 
     list.add(node4);
-    list.add(new Node(2));
+    list.add(std::make_shared<Node>(Node(2)));
     list.add(node7);
-    list.add(new Node(9));
+    list.add(std::make_shared<Node>(Node(9)));
+    list.add(node4);
     auto node = list.get(1);
 
     if (node)
